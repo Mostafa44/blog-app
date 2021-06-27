@@ -1,7 +1,7 @@
 {
     "name": "serverless-blog-app",
     "version": "1.0.0",
-    "description": "Serverless Blog image app",
+    "description": "Serverless Blog app",
     "dependencies": {
         "@types/axios": "^0.14.0",
         "@types/http-errors": "^1.6.1",
