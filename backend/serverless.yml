@@ -167,7 +167,7 @@ resources:
             AttributeType: S
           - AttributeName: userId
             AttributeType: S
-          - AttributeName: createdAt
+          - AttributeName: modifiedAt
             AttributeType: S
         KeySchema:
           - AttributeName: id
@@ -181,7 +181,7 @@ resources:
             KeySchema:
             - AttributeName: userId
               KeyType: HASH
-            - AttributeName: createdAt
+            - AttributeName: modifiedAt
               KeyType: RANGE
             Projection:
               ProjectionType: ALL

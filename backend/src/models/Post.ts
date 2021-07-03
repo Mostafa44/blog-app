@@ -2,6 +2,6 @@ export interface Post {
     userId: string
     id: string
     title: string
-    sendDate: string
+    modifiedAt: string
     attachmentUrl?: string
 }

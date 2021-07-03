@@ -3,6 +3,6 @@
  */
 export interface CreatePostRequest {
     title: string
-    sendDate: string
+    modifiedAt: string
     attachmentUrl?: string
 }

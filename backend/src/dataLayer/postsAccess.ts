@@ -2,7 +2,7 @@ import * as AWS from 'aws-sdk'
 import * as AWSXRay from 'aws-xray-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { createLogger } from '../utils/logger'
-const logger = createLogger('create-post');
+const logger = createLogger('post-access');
 const XAWS = AWSXRay.captureAWS(AWS) // debug tool to keep track of user requests
 //const XAWS = AWS // debug tool to keep track of user requests
 
@@ -19,7 +19,8 @@ export class PostAccess {
     }
 
     async getAllPosts(userId: string): Promise<Post[]> {
-        logger.info('Getting all posts')
+        logger.info('Getting all posts');
+        logger.info(userId);
         const params = {
             TableName: this.postsTable,
             IndexName: this.userIdIndex,
