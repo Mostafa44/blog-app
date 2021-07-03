@@ -3,5 +3,5 @@
  */
 export interface UpdatePostRequest {
     title: string
-    sendDate: string
+    modifiedAt: string
 }

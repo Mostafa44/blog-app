@@ -1,10 +1,12 @@
 import { BucketAccess } from './../dataLayer/bucketAccess';
 //import { UpdatePostRequest } from './../../../client/src/types/UpdatePostRequest';
+
 import * as uuid from 'uuid'
 
 import { Post } from '../models/Post'
 import { PostAccess } from '../dataLayer/postsAccess'
 import { CreatePostRequest } from '../requests/CreatePostRequest'
+import { UpdatePostRequest } from '../requests/UpdatePostRequest'
 import { parseUserId } from '../auth/utils'
 import { createLogger } from '../utils/logger'
 const postAccess = new PostAccess();
@@ -34,17 +36,17 @@ export async function createPost(
         attachmentUrl: createPostRequest.attachmentUrl
     })
 }
-// export async function updatePost(
-//     updatePostRequest: UpdatePostRequest,
-//     postItemId: string,
-//     jwtToken: string
-// ): Promise<Post> {
-//     const userId = parseUserId(jwtToken);
-//     return await postAccess.updatePost(postItemId, userId, {
-//         title: updatePostRequest.title,
-//         sendDate: updatePostRequest.sendDate,
-//     })
-// }
+export async function updatePost(
+    updatePostRequest: UpdatePostRequest,
+    postItemId: string,
+    jwtToken: string
+): Promise<Post> {
+    const userId = parseUserId(jwtToken);
+    return await postAccess.updatePost(postItemId, userId, {
+        title: updatePostRequest.title,
+        modifiedAt: updatePostRequest.modifiedAt,
+    })
+}
 export async function deletePost(postItemId: string, jwtToken: string): Promise<Post> {
     const userId = parseUserId(jwtToken);
     return await postAccess.deletePost(postItemId, userId)

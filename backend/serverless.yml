@@ -87,24 +87,24 @@ functions:
   #         - dynamodb:PutItem
   #         - dynamodb:DeleteItem
   #       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.POSTS_TABLE}
-  # UpdatePost:
-  #   handler: src/lambda/http/updatePost.handler
-  #   events:
-  #     - http:
-  #         method: put
-  #         path: posts/{postId}
-  #         cors: true
-  #         authorizer: Auth
-  #         reqValidatorName: RequestBodyValidator
-  #   iamRoleStatements:
-  #     - Effect: Allow
-  #       Action:
-  #         - dynamodb:GetItem
-  #         - dynamodb:Scan
-  #         - dynamodb:PutItem
-  #         - dynamodb:DeleteItem
-  #         - dynamodb:UpdateItem
-  #       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.POSTS_TABLE}
+  UpdatePost:
+    handler: src/lambda/http/updatePost.handler
+    events:
+      - http:
+          method: put
+          path: posts/{postId}
+          cors: true
+          authorizer: Auth
+          reqValidatorName: RequestBodyValidator
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:Scan
+          - dynamodb:PutItem
+          - dynamodb:DeleteItem
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.POSTS_TABLE}
   # TODO: Configure this function
   # UpdatePost:
   #   handler: src/lambda/http/updatePost.handler
