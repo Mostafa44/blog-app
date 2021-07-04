@@ -71,22 +71,22 @@ functions:
           - dynamodb:Scan
           - dynamodb:PutItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.POSTS_TABLE}
-  # DeletePost:
-  #   handler: src/lambda/http/deletePost.handler
-  #   events:
-  #     - http:
-  #         method: delete
-  #         path: posts/{postId}
-  #         cors: true
-  #         authorizer: Auth
-  #   iamRoleStatements:
-  #     - Effect: Allow
-  #       Action:
-  #         - dynamodb:GetItem
-  #         - dynamodb:Scan
-  #         - dynamodb:PutItem
-  #         - dynamodb:DeleteItem
-  #       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.POSTS_TABLE}
+  DeletePost:
+    handler: src/lambda/http/deletePost.handler
+    events:
+      - http:
+          method: delete
+          path: posts/{postId}
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:Scan
+          - dynamodb:PutItem
+          - dynamodb:DeleteItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.POSTS_TABLE}
   UpdatePost:
     handler: src/lambda/http/updatePost.handler
     events:
