@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 //import contentData from "../utils/content-data";
 //import { Col, Row } from "react-bootstrap";
@@ -8,7 +8,7 @@ import GuestGreeting from "./GuestGreeting";
 
 const Content = () => {
   const { getIdTokenClaims, isAuthenticated, getAccessTokenSilently } = useAuth0();
-
+  const [idToken, setIdToken] = useState('');
   useEffect(() => {
 
     const getUserAccessToken = async () => {
@@ -21,6 +21,7 @@ const Content = () => {
         console.log('Access token: ', accessToken);
         const claims = await getIdTokenClaims();
         console.log('Id token: ', claims.__raw);
+        setIdToken(claims.__raw);
       } catch (e) {
         console.log(e.message);
       }
@@ -34,7 +35,7 @@ const Content = () => {
       <PostCreate />
       <hr />
       <h2>Posts</h2>
-      <PostList />
+      <PostList authToken={idToken} />
     </div>);
   } else {
     return <GuestGreeting />

@@ -2,18 +2,29 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CommentCreate from './CommentCreate';
 import CommentsList from './CommentsList';
+import { getPosts } from '../api/posts-apis'
 
-const PostList = () => {
+const PostList = ({ authToken }) => {
 
     const [posts, setPosts] = useState({});
     const fetchPosts = async () => {
-        const res = await axios.get('http://posts.com/posts');
-        //console.log(res.data);
-        setPosts(res.data);
+        if (authToken && authToken !== '') {
+            console.log('inside the fetch');
+            console.log(authToken);
+            const res = await getPosts(authToken);
+            //console.log(res.data);
+            setPosts(res);
+        } else {
+            setPosts({})
+        }
     }
     useEffect(() => {
+        console.log("inside the postslist");
+        console.log(authToken);
+        console.log(posts);
         fetchPosts();
-    }, [])
+
+    }, [authToken])
     const renderedPosts = Object.values(posts).map(post => {
 
         return (<div className="Card"
@@ -21,8 +32,7 @@ const PostList = () => {
             style={{ width: '30%', marginBottom: '20px' }}>
             <div className="card-body">
                 <h3>{post.title}</h3>
-                <CommentsList comments={post.comments} />
-                <CommentCreate postId={post.id} />
+
             </div>
         </div>);
     });
