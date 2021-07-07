@@ -32,7 +32,7 @@ const Content = () => {
   if (isAuthenticated) {
     return (<div className="container">
       <h1>Create Post</h1>
-      <PostCreate />
+      <PostCreate authToken={idToken} />
       <hr />
       <h2>Posts</h2>
       <PostList authToken={idToken} />

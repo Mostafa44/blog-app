@@ -24,7 +24,9 @@ export async function createPost(
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${idToken}`
         }
-    })
+    });
+    console.log("inside the create-post-call");
+    console.log(response);
     return response.data.newItem
 }
 

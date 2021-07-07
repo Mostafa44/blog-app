@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-
-const PostCreate = () => {
+import { createPost } from '../api/posts-apis'
+const PostCreate = ({ authToken }) => {
     const [title, setTitle] = useState("");
     const onChangeHandler = (e) => {
         setTitle(e.target.value);
@@ -11,7 +11,8 @@ const PostCreate = () => {
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         console.log("submitted");
-        await axios.post('http://posts.com/posts/create', { title });
+        // await axios.post('http://posts.com/posts/create', { title });
+        await createPost(authToken, { title });
         setTitle('');
     }
     return <div >
