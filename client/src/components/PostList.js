@@ -4,28 +4,23 @@ import CommentCreate from './CommentCreate';
 import CommentsList from './CommentsList';
 import { getPosts } from '../api/posts-apis'
 
-const PostList = ({ authToken }) => {
+const PostList = ({ postList }) => {
 
-    const [posts, setPosts] = useState({});
-    const fetchPosts = async () => {
-        if (authToken && authToken !== '') {
-            console.log('inside the fetch');
-            console.log(authToken);
-            const res = await getPosts(authToken);
-            //console.log(res.data);
-            setPosts(res);
-        } else {
-            setPosts({})
-        }
-    }
+    const [posts, setPosts] = useState(Object.values(postList));
     useEffect(() => {
-        console.log("inside the postslist");
-        console.log(authToken);
-        console.log(posts);
-        fetchPosts();
+        setPosts(Object.values(postList));
+        console.log("inside the post-list");
+        console.log(postList);
+    }, [postList])
 
-    }, [authToken])
-    const renderedPosts = Object.values(posts).map(post => {
+    // useEffect(() => {
+    //     console.log("inside the postslist");
+    //     console.log(authToken);
+    //     console.log(posts);
+    //     fetchPosts();
+
+    // }, [authToken])
+    const renderedPosts = posts.map(post => {
 
         return (<div className="Card"
             key={post.id}

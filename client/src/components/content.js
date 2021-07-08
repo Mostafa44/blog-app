@@ -5,22 +5,30 @@ import { useAuth0 } from "@auth0/auth0-react";
 import PostCreate from './PostCreate';
 import PostList from './PostList'
 import GuestGreeting from "./GuestGreeting";
-import { createPost } from '../api/posts-apis'
+import { createPost, getPosts } from '../api/posts-apis'
 
 const Content = () => {
   const { getIdTokenClaims, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [idToken, setIdToken] = useState('');
+  const [posts, setPosts] = useState({});
   const onSubmitHandler = async (e, title) => {
     e.preventDefault();
     console.log("submitted");
     const resPost = await createPost(idToken, { title });
     console.log(resPost);
+
+    const allPosts = await getPosts(idToken);
+    setPosts(allPosts);
+    console.log(posts);
     //setTitle('');
   }
+
+
   useEffect(() => {
 
     const getUserAccessToken = async () => {
       const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+
       try {
         const accessToken = await getAccessTokenSilently({
           // audience: `https://${domain}/`,
@@ -35,15 +43,29 @@ const Content = () => {
       }
     };
     getUserAccessToken();
-  }, [isAuthenticated]);
 
+  }, [isAuthenticated]);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      if (idToken && idToken !== '') {
+        console.log('inside the fetch');
+        console.log(idToken);
+        const res = await getPosts(idToken);
+        //console.log(res.data);
+        setPosts(res);
+      } else {
+        setPosts({})
+      }
+    }
+    fetchPosts();
+  }, [idToken])
   if (isAuthenticated) {
     return (<div className="container">
       <h1>Create Post</h1>
       <PostCreate onPostubmit={onSubmitHandler} />
       <hr />
       <h2>Posts</h2>
-      <PostList authToken={idToken} />
+      <PostList postList={posts} />
     </div>);
   } else {
     return <GuestGreeting />
