@@ -8,7 +8,7 @@ plugins:
 
 package:
   individually: true
-  
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -28,7 +28,6 @@ provider:
     JWKS_URL: https://dev-o3mdmxx4.us.auth0.com/.well-known/jwks.json
 
 functions:
-
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
 
@@ -122,28 +121,28 @@ functions:
   #         path: posts/{postId}
 
   # # TODO: Configure this function
-  # GenerateUploadUrl:
-  #   handler: src/lambda/http/generateUploadUrl.handler
-  #   events:
-  #     - http:
-  #         method: post
-  #         path: posts/{postId}/attachment
-  #         authorizer: Auth
-  #         cors: true
-  #         reqValidatorName: RequestBodyValidator
-  #   iamRoleStatements:
-  #     - Effect: Allow
-  #       Action:
-  #         - s3:PutObject
-  #         - s3:GetObject
-  #       Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*
-  #     - Effect: Allow
-  #       Action:
-  #         - dynamodb:GetItem
-  #         - dynamodb:Scan
-  #         - dynamodb:PutItem
-  #         - dynamodb:UpdateItem
-  #       Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.POSTS_TABLE}
+  GenerateUploadUrl:
+    handler: src/lambda/http/generateUploadUrl.handler
+    events:
+      - http:
+          method: post
+          path: posts/{postId}/attachment
+          authorizer: Auth
+          cors: true
+          reqValidatorName: RequestBodyValidator
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+          - s3:GetObject
+        Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:Scan
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.POSTS_TABLE}
 
 resources:
   Resources:
@@ -179,25 +178,23 @@ resources:
         GlobalSecondaryIndexes:
           - IndexName: ${self:provider.environment.USER_ID_INDEX}
             KeySchema:
-            - AttributeName: userId
-              KeyType: HASH
-            - AttributeName: modifiedAt
-              KeyType: RANGE
+              - AttributeName: userId
+                KeyType: HASH
+              - AttributeName: modifiedAt
+                KeyType: RANGE
             Projection:
               ProjectionType: ALL
 
-    
     AttachmentsBucket:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:provider.environment.IMAGES_S3_BUCKET}
         CorsConfiguration:
           CorsRules:
-            -
-              AllowedOrigins:
-                - '*'
+            - AllowedOrigins:
+                - "*"
               AllowedHeaders:
-                - '*'
+                - "*"
               AllowedMethods:
                 - GET
                 - PUT
@@ -213,16 +210,15 @@ resources:
           Statement:
             - Sid: PublicReadForGetBucketObjects
               Effect: Allow
-              Principal: '*'
-              Action: 's3:GetObject'
-              Resource: 'arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*'
+              Principal: "*"
+              Action: "s3:GetObject"
+              Resource: "arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*"
         Bucket: !Ref AttachmentsBucket
 
-    
     RequestBodyValidator:
       Type: AWS::ApiGateway::RequestValidator
       Properties:
-        Name: 'request-body-validator'
+        Name: "request-body-validator"
         RestApiId:
           Ref: ApiGatewayRestApi
         ValidateRequestBody: true
