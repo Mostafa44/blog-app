@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavBar, Footer, Loading } from "./components";
 import { Home, Profile, ExternalApi } from "./views";
+import {NotFound} from './components/NotFound';
 
 import "./app.css";
 
@@ -21,6 +22,8 @@ const App = () => {
           <Route path="/" exact component={Home} />
           <Route path="/profile" component={Profile} />
           <Route path="/external-api" component={ExternalApi} />
+          
+          <Route component={NotFound} />
         </Switch>
       </Container>
       <Footer />
