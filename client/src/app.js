@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavBar, Footer, Loading } from "./components";
@@ -32,10 +32,7 @@ const App = () => {
           <Route path="/external-api" component={ExternalApi} />
            <Route
           path="/posts/:postId/edit"
-          exact
-          render={props => {
-            return <EditPost {...props} auth={this.props.auth} />
-          }}
+          exact component={EditPost}
         />
           <Route component={NotFound} />
         </Switch>

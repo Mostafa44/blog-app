@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import CommentCreate from './CommentCreate';
 import CommentsList from './CommentsList';
 import { getPosts } from '../api/posts-apis'
+import { Button , Card} from 'semantic-ui-react'
+import "semantic-ui-css/semantic.min.css";
 
 const PostList = ({ postList }) => {
 
     const [posts, setPosts] = useState(Object.values(postList));
+    const history = useHistory();
+    const onEditButtonClick=(postId)=>{
+        history.push(`/posts/${postId}/edit`)
+    }
     useEffect(() => {
         setPosts(Object.values(postList));
         console.log("inside the post-list");
@@ -22,14 +29,24 @@ const PostList = ({ postList }) => {
     // }, [authToken])
     const renderedPosts = posts.map(post => {
 
-        return (<div className="Card"
+        return (<Card 
             key={post.id}
-            style={{ width: '30%', marginBottom: '20px' }}>
-            <div className="card-body">
-                <h3>{post.title}</h3>
+            >
+            <Card.Content>
+            <Card.Header >
+                {post.title}
 
-            </div>
-        </div>);
+            </Card.Header>
+            <Card.Description>{""}</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+            
+          <Button primary onClick={() => onEditButtonClick(post.id)}>
+            Edit
+          </Button>
+         
+            </Card.Content>
+        </Card>);
     });
     return <div className="d-flex flex-row flex-wrap justify-content-between" >
         {renderedPosts}
