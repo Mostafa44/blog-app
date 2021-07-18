@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import CommentCreate from './CommentCreate';
-import CommentsList from './CommentsList';
-import { getPosts } from '../api/posts-apis'
+
+
 import { Button , Card} from 'semantic-ui-react'
 import "semantic-ui-css/semantic.min.css";
 
