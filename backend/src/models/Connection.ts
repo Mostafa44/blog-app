@@ -4,5 +4,5 @@ export interface Connection {
 }
 
 export interface Payload{
-    imageId:string
+    message:string
 }

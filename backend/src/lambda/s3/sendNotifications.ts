@@ -24,7 +24,7 @@ async function processS3Event(s3Event: S3Event) {
     const connections = await getAllConnections();
 
     const payload = {
-        imageId: key
+        message: key
     }
 
     for (const connection of connections) {
