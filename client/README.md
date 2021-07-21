@@ -6,12 +6,8 @@ This repository hosts a React project that defines a Single-Page Application (SP
 
 Install the client project dependencies:
 
-```bash
-yarn
-```
+npm i
 
 Run the client project:
 
-```bash
-yarn start
-```
+npm start
