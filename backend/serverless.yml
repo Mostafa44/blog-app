@@ -239,6 +239,8 @@ resources:
           - AttributeName: userId
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
+        StreamSpecification:
+          StreamViewType: OLD_IMAGE
         TableName: ${self:provider.environment.POSTS_TABLE}
         GlobalSecondaryIndexes:
           - IndexName: ${self:provider.environment.USER_ID_INDEX}
