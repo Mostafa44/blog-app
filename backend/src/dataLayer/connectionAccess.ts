@@ -56,7 +56,7 @@ export class ConnectionAccess {
     async sendMessageToConnection(connectionId:string, payload: Payload){
         try {
             console.log('Sending message to a connection', connectionId)
-        
+            console.log('the api-id is ', apiId)
             await this.apiGateway.postToConnection({
               ConnectionId: connectionId,
               Data: JSON.stringify(payload),

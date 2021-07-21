@@ -209,6 +209,29 @@ functions:
           - execute-api:ManageConnections
         Resource: arn:aws:execute-api:eu-west-3:661172005059:6b71mehga4/dev/POST/@connections/*
 
+  PublishStream:
+    environment:
+      STAGE: ${self:provider.stage}
+      API_ID:
+        Ref: WebsocketsApi
+    handler: src/lambda/dynamodb/publishStream.handler
+    events:
+      - stream:
+          type: dynamodb
+          arn: !GetAtt PostsDynamoDBTable.StreamArn
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:Scan
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CONNECTIONS_TABLE}
+      - Effect: Allow
+        Action:
+          - execute-api:Invoke
+          - execute-api:ManageConnections
+        Resource: arn:aws:execute-api:eu-west-3:661172005059:6b71mehga4/dev/POST/@connections/*
+
 resources:
   Resources:
     # TODO: Add any necessary AWS resources
